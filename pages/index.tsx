@@ -3,10 +3,13 @@ import Head from "next/head";
 import { Layout } from "antd";
 
 import { GdpChart, TreasuryChart } from "../components/Charts";
+import { useFeatureToggle } from "../hooks/useFeatureToggle";
 
 const { Header, Content } = Layout;
 
 export default function Home() {
+  const [isEnabled] = useFeatureToggle(); // useFeatureToggle returns an array with a function
+
   return (
     <Layout className="layout">
       <Head>
@@ -17,7 +20,7 @@ export default function Home() {
       </Header>
       <Content className="content">
         <GdpChart />
-        <TreasuryChart />
+        {isEnabled("treasury_chart") && <TreasuryChart />}
       </Content>
     </Layout>
   );
